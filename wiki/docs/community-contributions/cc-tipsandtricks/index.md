@@ -9,5 +9,6 @@ We encourage everyone to share their creations so that others might enjoy what y
 
 | Tip | Description | Author |
 | --- | ----------- | ------ |
+| [Full night mode](./full-night-mode.md) | Install other apps to customize the night mode for your View Assist satellites | jeroenterheerdt |
 | [Immich Clock Background](./immich_clock_background.md) | Display a webpage slideshow as the background for the clock or any other view | janstadt |
 | Placeholder | Placeholder | dinki |
