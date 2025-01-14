@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure View Assist Satellite Sensor",
+        "description": "Set up a View Assist satellite sensor.",
+        "data": {
+          "type": "Type",
+          "mic_device": "Microphone Device",
+          "mediaplayer_device": "Media Player Device",
+          "musicplayer_device": "Music Player Device",
+          "display_device": "Display Device",
+          "browser_id": "Browser ID"
+        }
+      }
+    }
+  }
+}
+

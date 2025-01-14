@@ -1,0 +1,1 @@
+DOMAIN = "view_assist"

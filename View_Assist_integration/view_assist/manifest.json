@@ -1,0 +1,11 @@
+{
+  "domain": "view_assist",
+  "name": "View Assist",
+  "version": "1.0.0",
+  "documentation": "https://example.com",
+  "dependencies": [],
+  "codeowners": ["@dinki"],
+  "config_flow": true,
+  "requirements": []
+
+}
