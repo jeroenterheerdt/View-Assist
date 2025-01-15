@@ -2,7 +2,7 @@
   "domain": "view_assist",
   "name": "View Assist",
   "version": "1.0.0",
-  "documentation": "https://example.com",
+  "documentation": "https://github.com/dinki/View-Assist",
   "dependencies": [],
   "codeowners": ["@dinki"],
   "config_flow": true,

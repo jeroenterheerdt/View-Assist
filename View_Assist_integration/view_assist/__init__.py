@@ -1,7 +1,10 @@
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
+from homeassistant.helpers.entity import DeviceInfo
+import homeassistant.helpers.device_registry as dr
 from .const import DOMAIN
+
 
 async def async_setup(hass: HomeAssistant, config: dict):
     """Set up the View Assist integration from YAML (if any)."""
@@ -43,8 +46,7 @@ class ViewAssistSensor(Entity):
         self._hass = hass
         self._entry = entry
         self._name = entry.data["name"]
-        # Set a unique_id using entry_id and sensor name
-        self._unique_id = f"{entry.entry_id}_{self._name.replace(' ', '_').lower()}"
+        self._attr_unique_id = f"{self._attr_name}_vasensor"
         self._attributes = {
             "type": entry.data.get("type", "view_audio"),
             "mic_device": entry.data.get("mic_device", ""),
@@ -55,7 +57,14 @@ class ViewAssistSensor(Entity):
         }
         self._state = "active"
         self._icon = "mdi:glasses"  # Set the icon for the sensor
-
+        
+        self._attr_device_info = DeviceInfo(
+                    identifiers={(DOMAIN, self._attr_name)},
+                    manufacturer="View Assist",
+                    name=self._attr_name,
+                    entry_type=dr.DeviceEntryType.SERVICE,
+                    sw_version="0.0.0"
+                )
     @property
     def name(self):
         return self._name
