@@ -27,7 +27,7 @@ class ViewAssistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                         )
                     ),
                     vol.Required("mic_device"): selector.EntitySelector(
-                        selector.EntitySelectorConfig(domain="sensor")
+                        selector.EntitySelectorConfig(domain=["sensor", "assist_satellite"])
                     ),
                     vol.Required("mediaplayer_device"): selector.EntitySelector(
                         selector.EntitySelectorConfig(domain="media_player")
