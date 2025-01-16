@@ -14,7 +14,9 @@ class ViewAssistSensor(SensorEntity):
     def __init__(self, config):
         """Initialize the sensor."""
         self._attr_name = config["name"]
+        self._attr_icon = "mdi:glasses"
         self._type = config["type"]
+        self._attr_unique_id = f"{self._attr_name}_vasensor"
         self._mic_device = config["mic_device"]
         self._mediaplayer_device = config["mediaplayer_device"]
         self._musicplayer_device = config["musicplayer_device"]
