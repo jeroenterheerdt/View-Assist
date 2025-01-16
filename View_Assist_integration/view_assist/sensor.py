@@ -14,7 +14,6 @@ class ViewAssistSensor(SensorEntity):
     def __init__(self, config):
         """Initialize the sensor."""
         self._attr_name = config["name"]
-        self._attr_icon = "mdi:glasses"
         self._type = config["type"]
         self._attr_unique_id = f"{self._attr_name}_vasensor"
         self._mic_device = config["mic_device"]
@@ -31,3 +30,8 @@ class ViewAssistSensor(SensorEntity):
             "display_device": self._display_device,
             "browser_id": self._browser_id,
         }
+
+    @property
+    def icon(self):
+        """Return the icon of the sensor."""
+        return "mdi:glasses"        
