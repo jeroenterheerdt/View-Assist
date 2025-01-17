@@ -1,9 +1,19 @@
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.helpers import entity_platform
+import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.config_validation import make_entity_service_schema
+import voluptuous as vol
 from .const import DOMAIN
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up sensors from a config entry."""
     sensors = [ViewAssistSensor(config_entry.data)]
+    platform = entity_platform.async_get_current_platform()
+    platform.async_register_entity_service(
+        name="set_state",
+        schema=make_entity_service_schema({str: cv.match_all}, extra=vol.ALLOW_EXTRA),
+        func="set_entity_state"
+    )
     async_add_entities(sensors)
 
 class ViewAssistSensor(SensorEntity):
@@ -31,7 +41,20 @@ class ViewAssistSensor(SensorEntity):
             "browser_id": self._browser_id,
         }
 
+    def set_entity_state(self, **kwargs):
+        """Set the state of the entity."""
+        for k, v in kwargs.items():
+            if k == "entity_id":
+                continue
+            if k == "allow_create":
+                continue
+            if k == "state":
+                self._attr_native_value = v
+                continue
+            self._attr_extra_state_attributes[k] = v
+        self.schedule_update_ha_state()
+
     @property
     def icon(self):
         """Return the icon of the sensor."""
-        return "mdi:glasses"        
+        return "mdi:glasses"
