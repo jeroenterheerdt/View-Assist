@@ -29,17 +29,21 @@ class ViewAssistSensor(SensorEntity):
         self._mic_device = config["mic_device"]
         self._mediaplayer_device = config["mediaplayer_device"]
         self._musicplayer_device = config["musicplayer_device"]
-        self._display_device = config["display_device"]
-        self._browser_id = config.get("browser_id", "")
+        self._display_device = config.get("display_device")  # Optional for audio_only
+        self._browser_id = config.get("browser_id", "")  # Optional for audio_only
         self._attr_native_value = ""
         self._attr_extra_state_attributes = {
             "type": self._type,
             "mic_device": self._mic_device,
             "mediaplayer_device": self._mediaplayer_device,
             "musicplayer_device": self._musicplayer_device,
-            "display_device": self._display_device,
-            "browser_id": self._browser_id,
         }
+
+        # Only add these attributes if they exist
+        if self._display_device:
+            self._attr_extra_state_attributes["display_device"] = self._display_device
+        if self._browser_id:
+            self._attr_extra_state_attributes["browser_id"] = self._browser_id
 
     def set_entity_state(self, **kwargs):
         """Set the state of the entity."""

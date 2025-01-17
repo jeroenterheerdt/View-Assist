@@ -8,24 +8,45 @@ class ViewAssistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
 
+    def __init__(self):
+        self.type = None
+
     async def async_step_user(self, user_input=None):
         """Handle the initial step."""
         if user_input is not None:
-            # Create a configuration entry
-            return self.async_create_entry(title=user_input["name"], data=user_input)
+            self.type = user_input["type"]
+            return await self.async_step_options()
 
-        # Show the form for user input
+        # Show the initial form to select the type with descriptive text
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
-                    vol.Required("name"): str,
                     vol.Required("type", default="view_audio"): selector.SelectSelector(
                         selector.SelectSelectorConfig(
-                            options=["view_audio", "audio_only"],
+                            options=[
+                                {"value": "view_audio", "label": "View Assist device with display"},
+                                {"value": "audio_only", "label": "View Assist device with no display"},
+                            ],
                             mode="dropdown",
                         )
                     ),
+                }
+            ),
+        )
+
+    async def async_step_options(self, user_input=None):
+        """Handle the options step."""
+        if user_input is not None:
+            # Include the type in the data to save in the config entry
+            user_input["type"] = self.type
+            return self.async_create_entry(title=user_input.get("name", "View Assist"), data=user_input)
+
+        # Define the schema based on the selected type
+        if self.type == "view_audio":
+            data_schema = vol.Schema(
+                {
+                    vol.Required("name"): str,
                     vol.Required("mic_device"): selector.EntitySelector(
                         selector.EntitySelectorConfig(domain=["sensor", "assist_satellite"])
                     ),
@@ -40,5 +61,22 @@ class ViewAssistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     ),
                     vol.Optional("browser_id"): str,
                 }
-            ),
-        )
+            )
+        else:  # audio_only
+            data_schema = vol.Schema(
+                {
+                    vol.Required("name"): str,
+                    vol.Required("mic_device"): selector.EntitySelector(
+                        selector.EntitySelectorConfig(domain=["sensor", "assist_satellite"])
+                    ),
+                    vol.Required("mediaplayer_device"): selector.EntitySelector(
+                        selector.EntitySelectorConfig(domain="media_player")
+                    ),
+                    vol.Required("musicplayer_device"): selector.EntitySelector(
+                        selector.EntitySelectorConfig(domain="media_player")
+                    ),
+                }
+            )
+
+        # Show the form for the selected type
+        return self.async_show_form(step_id="options", data_schema=data_schema)
