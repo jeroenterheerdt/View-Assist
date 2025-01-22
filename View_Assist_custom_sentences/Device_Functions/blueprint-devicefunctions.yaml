@@ -38,7 +38,23 @@ blueprint:
     stop_music:
       name: Stop Music Command 
       description: The command to use to stop music playback
-      default: "stop [the] music"        
+      default: "stop [the] music"
+    music_volume_up:
+      name: Music volume up command
+      description: The command to use to turn up the music volume
+      default: "[turn up | increase] [the] music [volume]"
+    music_volume_down:
+      name: Music volume down command
+      description: The command to use to turn down the music volume
+      default: "[turn down | decrease] [the] music [volume]"             
+    pause_music:
+      name: Music pause resume command
+      description: The command to use to pause or resume the Music
+      default: "[pause | resume] [the] music"
+    next_song:
+      name: Music next song command
+      description: The command to use to play the next song
+      default: "[next | skip this | skip to next] song" 
     modes:
       name: Modes
       description: The available modes (do not include do not disturb)
