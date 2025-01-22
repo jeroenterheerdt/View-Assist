@@ -99,6 +99,18 @@ trigger:
   - platform: conversation
     command: !input stop_music
     id: stop_music
+  - trigger: conversation
+    command: !input music_volume_up
+    id: music_volume_up
+  - trigger: conversation
+    command: !input music_volume_down
+    id: music_volume_down
+  - trigger: conversation
+    command: !input pause_music
+    id: pause_music
+  - trigger: conversation
+    command: !input next_song
+    id: next_song
 condition: []
 action:
   - choose:
