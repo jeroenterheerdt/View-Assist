@@ -59,7 +59,7 @@ class ViewAssistConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required("display_device"): selector.EntitySelector(
                         selector.EntitySelectorConfig(domain="sensor")
                     ),
-                    vol.Optional("browser_id"): str,
+                    vol.Required("browser_id"): str,
                 }
             )
         else:  # audio_only
