@@ -7,9 +7,13 @@ from homeassistant.core import (
     SupportsResponse,
 )
 from .const import DOMAIN
+<<<<<<< HEAD
 #import homeassistant.helpers.entity_registry as er
 from homeassistant.helpers import entity_registry as er
 
+=======
+import homeassistant.helpers.entity_registry as er
+>>>>>>> 9830dedd356c3f555a9492a10e7c39ac1a2b234d
 import logging
 
 _LOGGER = logging.getLogger(__name__)
@@ -46,6 +50,21 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         DOMAIN,
         "get_id",
         handle_get_id,
+<<<<<<< HEAD
+=======
+        supports_response=SupportsResponse.ONLY,
+    )
+
+    async def handle_satellite_lookup(call: ServiceCall) -> ServiceResponse:
+        """Handle a satellite lookup call."""
+        device_id = call.data.get("device_id")
+        return {"device_id_received": device_id}
+
+    hass.services.async_register(
+        DOMAIN,
+        "get_satellite",
+        handle_satellite_lookup,
+>>>>>>> 9830dedd356c3f555a9492a10e7c39ac1a2b234d
         supports_response=SupportsResponse.ONLY,
     )
 
@@ -117,6 +136,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 #####
 
     return True
+
     
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Unload a config entry."""
