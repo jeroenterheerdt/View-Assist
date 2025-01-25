@@ -2,10 +2,35 @@ type: custom:button-card
 variables:
   var_group: group.viewassist_satellites
 name: Troubleshooting (v2)
-show_icon: false
-show_state: false
-show_name: true
+template:
+  - variable_template
+  - body_template
+styles:
+  custom_fields:
+    title:
+      - padding: 0.2vh
+      - font-size: 3.1vh
+      - font-weight: bold
+    default_satellite:
+      - padding: 0.5vh
+      - font-size: 2.13vh
+      - line-height: 2.9vh
+      - position: absolute
+      - top: 5%
+  grid:
+    - grid-template-areas: |
+        "title status" 
+        "default_satellite default_satellite"
+        "assist assist"
+    - grid-template-rows: min-content min-content min-content min-content
+    - grid-template-columns: 1fr 1fr
+  card:
+    - background: >-
+        [[[ return `center / cover no-repeat url(${variables.var_background})`
+        ]]]
+    - background-size: cover
 custom_fields:
+  title: Troubleshooting (v2)
   default_satellite: |
     [[[ 
       try {
@@ -30,8 +55,3 @@ custom_fields:
         return 'Error: ' + e.message;
       }
     ]]]
-styles:
-  custom_fields:
-    default_satellite:
-      - padding: 10px
-      - text-align: left
