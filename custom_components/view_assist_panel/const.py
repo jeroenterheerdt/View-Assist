@@ -1,10 +1,7 @@
-"View Assist Panel Constants."
+"""Constants for the View Assist Panel integration."""
 
 DOMAIN = "view_assist_panel"
-NAME = "View Assist"
-VERSION = "2025.1.0"
-
-# for panel
+NAME = "View Assist Panel"
 CUSTOM_COMPONENTS = "custom_components"
 INTEGRATION_FOLDER = DOMAIN
 PANEL_FOLDER = "frontend"

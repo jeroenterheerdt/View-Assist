@@ -1,0 +1,12 @@
+{
+  "domain": "view_assist_panel",
+  "name": "View Assist Panel",
+  "codeowners": ["@jeroenterheerdt"],
+  "dependencies": ["http", "panel_custom"],
+  "documentation": "https://www.home-assistant.io/integrations/view_assist_panel",
+  "homekit": {},
+  "iot_class": "assumed_state",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": []
+}

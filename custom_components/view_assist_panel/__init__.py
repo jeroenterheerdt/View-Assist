@@ -1,50 +1,28 @@
-"""View Assist Panel Integration."""
+"""The View Assist Panel integration."""
 
-import logging
+from __future__ import annotations
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
-
+from homeassistant.helpers.discovery import async_load_platform
 from .const import DOMAIN
-
-# panel work
 from .panel import async_register_panel, async_unregister_panel
-
-_LOGGER = logging.getLogger(__name__)
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
+type ViewAssistConfigEntry = ConfigEntry[0]  # noqa: F821
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+
+async def async_setup_entry(hass: HomeAssistant, entry: ViewAssistConfigEntry) -> bool:
     """Set up View Assist Panel from a config entry."""
-    hass.data.setdefault(DOMAIN, {})
-    # Request platform setup
-    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    # Register the panel (frontend)
-    await async_register_panel(hass)
-    #####
-
+    await async_load_platform(hass, "sensor", DOMAIN, {}, entry)
+    await async_register_panel(hass, entry)
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_unload_entry(hass: HomeAssistant, entry: ViewAssistConfigEntry) -> bool:
     """Unload a config entry."""
-    if unloaded := await hass.config_entries.async_forward_entry_unload(
-        entry, PLATFORMS
-    ):
-        hass.data[DOMAIN].pop(entry.entry_id)
-
-    async_unregister_panel(hass)
-    return unloaded
-
-
-async def async_remove_entry(hass: HomeAssistant, entry):
-    """Remove Smart Irrigation config entry."""
-    async_unregister_panel(hass)
-    if DOMAIN in hass.data:
-        if "coordinator" in hass.data[DOMAIN]:
-            coordinator = hass.data[DOMAIN]["coordinator"]
-            await coordinator.async_delete_config()
-        del hass.data[DOMAIN]
+    await async_unregister_panel(hass, entry)
+    return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
